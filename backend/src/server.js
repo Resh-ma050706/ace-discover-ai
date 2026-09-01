@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const pool = require("./config/database");
 
 const app = express();
 
@@ -12,12 +13,25 @@ app.use(
 
 app.use(express.json());
 
-app.get("/api/health", (req, res) => {
-  res.status(200).json({
-    success: true,
-    project: "ACE Discover AI",
-    message: "Backend server is running",
-  });
+app.get("/api/health", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW() AS database_time");
+
+    res.status(200).json({
+      success: true,
+      project: "ACE Discover AI",
+      message: "Backend server and PostgreSQL are running",
+      databaseConnected: true,
+      databaseTime: result.rows[0].database_time,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "PostgreSQL connection failed",
+      databaseConnected: false,
+      error: error.message,
+    });
+  }
 });
 
 app.use((req, res) => {
