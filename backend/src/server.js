@@ -4,6 +4,7 @@ require("dotenv").config();
 const pool = require("./config/database");
 const eventRoutes = require("./routes/eventRoutes");
 const authRoutes = require("./routes/authRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 const app = express();
 
 app.use(
@@ -15,6 +16,7 @@ app.use(
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/profile", profileRoutes);
 
 app.get("/api/health", async (req, res) => {
   try {
