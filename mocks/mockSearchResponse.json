@@ -1,0 +1,28 @@
+{
+  "query": "Find AI hackathons for engineering students in Chennai this month",
+  "interpretedQuery": {
+    "domain": "Artificial Intelligence",
+    "eventType": "Hackathon",
+    "location": "Chennai",
+    "timeRange": "This month",
+    "studentType": "Engineering Student"
+  },
+  "results": [
+    {
+      "id": "event001",
+      "title": "AI Hackathon 2026",
+      "location": "Chennai",
+      "matchPercentage": 92,
+      "eligibilityStatus": "Eligible",
+      "matchReasons": [
+        "Matches AI interest",
+        "Engineering students are eligible",
+        "Event is in Chennai"
+      ],
+      "missingRequirements": [],
+      "registrationDeadline": "2026-09-15",
+      "suggestedNextAction": "Apply now",
+      "registrationLink": "https://example.com/register"
+    }
+  ]
+}
