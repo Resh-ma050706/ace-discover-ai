@@ -253,29 +253,29 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 px-4 py-10 text-white">
+    <main className="min-h-screen bg-[#F8F9FC] px-4 py-10 text-[#172033]">
       <div className="mx-auto max-w-4xl">
         <div className="mb-8 text-center">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-cyan-400">
+          <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-[#6D28D9]">
             ACE Discover AI
           </p>
 
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-4xl font-bold tracking-tight text-[#172033]">
             Create your student profile
           </h1>
 
-          <p className="mt-3 text-slate-400">
+          <p className="mt-3 text-[#64748B]">
             Tell us about yourself so ACE can find opportunities that fit you.
           </p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="space-y-8 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl md:p-8"
+          className="space-y-8 rounded-3xl border border-[#E5E7EB] bg-white p-6 shadow-xl shadow-purple-100/30 md:p-9"
         >
           {/* Basic Information */}
           <section>
-            <h2 className="mb-4 text-xl font-semibold">
+            <h2 className="mb-4 text-xl font-bold tracking-tight text-[#172033]">
               1. Basic Information
             </h2>
 
@@ -288,13 +288,13 @@ export default function RegisterPage() {
                 <input
                   value={form.name}
                   onChange={(e) => updateField("name", e.target.value)}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                  className="w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
                   placeholder="Enter your name"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium">
+                <label className="mb-2 block text-sm font-semibold text-[#172033]">
                   Email *
                 </label>
 
@@ -302,7 +302,7 @@ export default function RegisterPage() {
                   type="email"
                   value={form.email}
                   onChange={(e) => updateField("email", e.target.value)}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                  className="w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
                   placeholder="you@example.com"
                 />
               </div>
@@ -316,7 +316,7 @@ export default function RegisterPage() {
                   type="password"
                   value={form.password}
                   onChange={(e) => updateField("password", e.target.value)}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                  className="w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
                   placeholder="Minimum 8 characters"
                 />
               </div>
@@ -338,7 +338,7 @@ export default function RegisterPage() {
                 <input
                   value={form.college}
                   onChange={(e) => updateField("college", e.target.value)}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                  className="w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
                   placeholder="Your college"
                 />
               </div>
@@ -351,7 +351,7 @@ export default function RegisterPage() {
                 <input
                   value={form.degree}
                   onChange={(e) => updateField("degree", e.target.value)}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                  className="w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
                   placeholder="e.g. B.Tech"
                 />
               </div>
@@ -364,7 +364,7 @@ export default function RegisterPage() {
                 <input
                   value={form.department}
                   onChange={(e) => updateField("department", e.target.value)}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                  className="w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
                   placeholder="e.g. AI and Data Science"
                 />
               </div>
@@ -379,7 +379,7 @@ export default function RegisterPage() {
                   onChange={(e) =>
                     updateField("studyYear", Number(e.target.value))
                   }
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                  className="w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
                 >
                   <option value={1}>1st Year</option>
                   <option value={2}>2nd Year</option>
@@ -402,7 +402,7 @@ export default function RegisterPage() {
               <input
                 value={skillName}
                 onChange={(e) => setSkillName(e.target.value)}
-                className="rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                className="rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
                 placeholder="e.g. Python"
               />
 
@@ -411,7 +411,7 @@ export default function RegisterPage() {
                 onChange={(e) =>
                   setSkillLevel(e.target.value as SkillLevel)
                 }
-                className="rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                className="rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
               >
                 {skillLevels.map((level) => (
                   <option key={level} value={level}>
@@ -423,7 +423,7 @@ export default function RegisterPage() {
               <button
                 type="button"
                 onClick={addSkill}
-                className="rounded-lg bg-cyan-500 px-5 py-3 font-semibold text-slate-950 hover:bg-cyan-400"
+                className="rounded-xl bg-gradient-to-r from-[#6D28D9] to-[#8B2CF5] px-5 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
               >
                 Add Skill
               </button>
@@ -435,7 +435,7 @@ export default function RegisterPage() {
                   key={skill.name}
                   type="button"
                   onClick={() => removeSkill(skill.name)}
-                  className="rounded-full bg-slate-800 px-4 py-2 text-sm"
+                  className="rounded-full border border-[#E9D5FF] bg-[#F3E8FF] px-4 py-2 text-sm font-medium text-[#6D28D9] transition hover:bg-[#E9D5FF]"
                 >
                   {skill.name} · {skill.level} ×
                 </button>
@@ -453,14 +453,14 @@ export default function RegisterPage() {
               <input
                 value={interestInput}
                 onChange={(e) => setInterestInput(e.target.value)}
-                className="flex-1 rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                className="flex-1 rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
                 placeholder="e.g. Artificial Intelligence"
               />
 
               <button
                 type="button"
                 onClick={addInterest}
-                className="rounded-lg bg-cyan-500 px-5 py-3 font-semibold text-slate-950 hover:bg-cyan-400"
+                className="rounded-xl bg-gradient-to-r from-[#6D28D9] to-[#8B2CF5] px-5 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
               >
                 Add
               </button>
@@ -490,14 +490,14 @@ export default function RegisterPage() {
               <input
                 value={locationInput}
                 onChange={(e) => setLocationInput(e.target.value)}
-                className="flex-1 rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+                className="flex-1 rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
                 placeholder="e.g. Chennai or Online"
               />
 
               <button
                 type="button"
                 onClick={addLocation}
-                className="rounded-lg bg-cyan-500 px-5 py-3 font-semibold text-slate-950 hover:bg-cyan-400"
+                className="rounded-xl bg-gradient-to-r from-[#6D28D9] to-[#8B2CF5] px-5 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
               >
                 Add
               </button>
@@ -535,8 +535,8 @@ export default function RegisterPage() {
                     onClick={() => toggleEventType(eventType)}
                     className={`rounded-full border px-4 py-2 text-sm ${
                       selected
-                        ? "border-cyan-400 bg-cyan-400 text-slate-950"
-                        : "border-slate-700 bg-slate-800"
+  ? "border-[#7C3AED] bg-[#7C3AED] text-white shadow-sm"
+  : "border-[#E5E7EB] bg-[#FAF8FF] text-[#64748B] hover:border-[#C4B5FD] hover:text-[#6D28D9]"
                     }`}
                   >
                     {eventType}
@@ -557,7 +557,7 @@ export default function RegisterPage() {
               onChange={(e) =>
                 updateField("teamAvailability", e.target.value)
               }
-              className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400"
+              className="w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-4 py-3.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
             >
               <option value="Individual">Individual</option>
               <option value="Looking for a team">Looking for a team</option>
@@ -567,13 +567,13 @@ export default function RegisterPage() {
 
           {/* Messages */}
           {error && (
-            <div className="rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-300">
+            <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-600">
               {error}
             </div>
           )}
 
           {success && (
-            <div className="rounded-lg border border-green-500/40 bg-green-500/10 p-4 text-sm text-green-300">
+            <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-sm font-medium text-green-600">
               {success}
             </div>
           )}
@@ -581,17 +581,17 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-xl bg-cyan-500 px-6 py-4 text-lg font-bold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-xl bg-gradient-to-r from-[#6D28D9] to-[#8B2CF5] px-6 py-4 text-lg font-bold text-white shadow-md shadow-purple-200 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-200 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
           >
             {isSubmitting ? "Creating account..." : "Create Account"}
           </button>
 
-          <p className="text-center text-sm text-slate-400">
+          <p className="text-center text-sm text-[#64748B]">
             Already have an account?{" "}
             <button
               type="button"
               onClick={() => router.push("/login")}
-              className="font-semibold text-cyan-400 hover:underline"
+              className="font-bold text-[#6D28D9] transition hover:text-[#8B2CF5] hover:underline"
             >
               Login
             </button>

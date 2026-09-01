@@ -77,39 +77,41 @@ async function handleSave() {
 
   if (error || !profile) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-950 px-4 text-white">
-        <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-8 text-center">
-          <h1 className="text-2xl font-bold">Profile unavailable</h1>
+     <main className="flex min-h-screen items-center justify-center bg-[#F8F9FC] px-4 text-[#172033]">
+  <div className="w-full max-w-md rounded-3xl border border-[#E5E7EB] bg-white p-8 text-center shadow-xl shadow-purple-100/30">
+    <h1 className="text-2xl font-bold tracking-tight text-[#172033]">
+      Profile unavailable
+    </h1>
 
-          <p className="mt-3 text-slate-400">
-            {error || "Your profile could not be loaded."}
-          </p>
+    <p className="mt-3 text-[#64748B]">
+      {error || "Your profile could not be loaded."}
+    </p>
 
-          <button
-            onClick={() => router.push("/login")}
-            className="mt-6 rounded-lg bg-cyan-500 px-6 py-3 font-semibold text-slate-950 hover:bg-cyan-400"
-          >
-            Go to Login
-          </button>
-        </div>
-      </main>
+    <button
+      onClick={() => router.push("/login")}
+      className="mt-6 rounded-xl bg-gradient-to-r from-[#6D28D9] to-[#8B2CF5] px-6 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+    >
+      Go to Login
+    </button>
+  </div>
+</main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 px-4 py-10 text-white">
+    <main className="min-h-screen bg-[#F8F9FC] px-4 py-10 text-[#172033]">
       <div className="mx-auto max-w-4xl">
         <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#6D28D9]">
               ACE Discover AI
             </p>
 
-            <h1 className="mt-2 text-4xl font-bold">
+            <h1 className="mt-2 text-4xl font-bold tracking-tight text-[#172033]">
               Student Profile
             </h1>
 
-            <p className="mt-2 text-slate-400">
+            <p className="mt-2 text-[#64748B]">
               Your profile information
             </p>
           </div>
@@ -122,7 +124,7 @@ async function handleSave() {
       setSaveMessage("");
       setIsEditing(true);
     }}
-    className="rounded-lg bg-cyan-500 px-5 py-2.5 font-semibold text-slate-950 hover:bg-cyan-400"
+    className="rounded-xl bg-gradient-to-r from-[#6D28D9] to-[#8B2CF5] px-5 py-2.5 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
   >
     Edit Profile
   </button>
@@ -131,7 +133,7 @@ async function handleSave() {
     <button
       onClick={handleSave}
       disabled={isSaving}
-      className="rounded-lg bg-cyan-500 px-5 py-2.5 font-semibold text-slate-950 hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-50"
+      className="rounded-xl bg-gradient-to-r from-[#6D28D9] to-[#8B2CF5] px-5 py-2.5 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
     >
       {isSaving ? "Saving..." : "Save Changes"}
     </button>
@@ -143,7 +145,7 @@ async function handleSave() {
         setSaveMessage("");
       }}
       disabled={isSaving}
-      className="rounded-lg border border-slate-700 px-5 py-2.5 font-medium hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+      className="rounded-xl border border-[#E5E7EB] bg-white px-5 py-2.5 font-semibold text-[#172033] transition hover:border-[#C4B5FD] hover:bg-[#FAF8FF] disabled:cursor-not-allowed disabled:opacity-50"
     >
       Cancel
     </button>
@@ -152,7 +154,7 @@ async function handleSave() {
 
   <button
     onClick={handleLogout}
-    className="rounded-lg border border-slate-700 px-5 py-2.5 font-medium hover:bg-slate-800"
+    className="rounded-xl border border-[#E5E7EB] bg-white px-5 py-2.5 font-semibold text-[#172033] transition hover:border-[#C4B5FD] hover:bg-[#FAF8FF]"
   >
     Logout
   </button>
@@ -165,14 +167,14 @@ async function handleSave() {
 )}
         <div className="space-y-6">
           {/* Personal Information */}
-          <section className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 className="mb-5 text-xl font-semibold">
+          <section className="rounded-3xl border border-[#E5E7EB] bg-white p-6 shadow-sm shadow-purple-100/40">
+            <h2 className="mb-5 text-xl font-bold tracking-tight text-[#172033]">
               Personal Information
             </h2>
 
             <div className="grid gap-5 md:grid-cols-2">
               <div>
-                <p className="text-sm text-slate-500">Name</p>
+                <p className="text-sm font-medium text-[#64748B]">Name</p>
 
 {isEditing && editProfile ? (
   <input
@@ -183,7 +185,7 @@ async function handleSave() {
         name: event.target.value,
       })
     }
-    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 outline-none focus:border-cyan-400"
+    className="mt-1 w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-3 py-2.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
   />
 ) : (
   <p className="mt-1 font-medium">{profile.name}</p>
@@ -191,21 +193,21 @@ async function handleSave() {
               </div>
 
               <div>
-                <p className="text-sm text-slate-500">Email</p>
+                <p className="text-sm font-medium text-[#64748B]">Email</p>
                 <p className="mt-1 font-medium">{profile.email}</p>
               </div>
             </div>
           </section>
 
           {/* Academic Information */}
-          <section className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 className="mb-5 text-xl font-semibold">
+          <section className="rounded-3xl border border-[#E5E7EB] bg-white p-6 shadow-sm shadow-purple-100/40">
+            <h2 className="mb-5 text-xl font-bold tracking-tight text-[#172033]">
               Academic Information
             </h2>
 
             <div className="grid gap-5 md:grid-cols-2">
               <div>
-                <p className="text-sm text-slate-500">College</p>
+                <p className="text-sm font-medium text-[#64748B]">College</p>
 
 {isEditing && editProfile ? (
   <input
@@ -216,7 +218,7 @@ async function handleSave() {
         college: event.target.value,
       })
     }
-    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 outline-none focus:border-cyan-400"
+    className="mt-1 w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-3 py-2.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
   />
 ) : (
   <p className="mt-1 font-medium">{profile.college}</p>
@@ -224,7 +226,7 @@ async function handleSave() {
               </div>
 
               <div>
-                <p className="text-sm text-slate-500">Degree</p>
+                <p className="text-sm font-medium text-[#64748B]">Degree</p>
 
 {isEditing && editProfile ? (
   <input
@@ -235,7 +237,7 @@ async function handleSave() {
         degree: event.target.value,
       })
     }
-    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 outline-none focus:border-cyan-400"
+    className="mt-1 w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-3 py-2.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
   />
 ) : (
   <p className="mt-1 font-medium">{profile.degree}</p>
@@ -243,7 +245,7 @@ async function handleSave() {
               </div>
 
               <div>
-                <p className="text-sm text-slate-500">Department</p>
+                <p className="text-sm font-medium text-[#64748B]">Department</p>
 
 {isEditing && editProfile ? (
   <input
@@ -254,7 +256,7 @@ async function handleSave() {
         department: event.target.value,
       })
     }
-    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 outline-none focus:border-cyan-400"
+    className="mt-1 w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-3 py-2.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
   />
 ) : (
   <p className="mt-1 font-medium">{profile.department}</p>
@@ -262,7 +264,7 @@ async function handleSave() {
               </div>
 
               <div>
-                <p className="text-sm text-slate-500">Study Year</p>
+                <p className="text-sm font-medium text-[#64748B]">Study Year</p>
 
 {isEditing && editProfile ? (
   <input
@@ -276,22 +278,22 @@ async function handleSave() {
         studyYear: Number(event.target.value),
       })
     }
-    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 outline-none focus:border-cyan-400"
+    className="mt-1 w-full rounded-xl border border-[#E5E7EB] bg-[#FAF8FF] px-3 py-2.5 text-[#172033] outline-none transition placeholder:text-[#94A3B8] focus:border-[#7C3AED] focus:bg-white focus:ring-4 focus:ring-[#7C3AED]/10"
   />
 ) : (
   <p className="mt-1 font-medium">
     Year {profile.studyYear}
   </p>
 )}
-                  Year {profile.studyYear}
+                 
                 
               </div>
             </div>
           </section>
 
           {/* Skills */}
-          <section className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 className="mb-5 text-xl font-semibold">
+          <section className="rounded-3xl border border-[#E5E7EB] bg-white p-6 shadow-sm shadow-purple-100/40">
+            <h2 className="mb-5 text-xl font-bold tracking-tight text-[#172033]">
               Skills
             </h2>
 
@@ -299,10 +301,10 @@ async function handleSave() {
               {profile.skills.map((skill) => (
                 <div
                   key={skill.name}
-                  className="rounded-full bg-slate-800 px-4 py-2"
+                  className="rounded-full border border-[#E9D5FF] bg-[#F3E8FF] px-4 py-2 text-[#6D28D9]"
                 >
                   <span className="font-medium">{skill.name}</span>
-                  <span className="ml-2 text-sm text-slate-400">
+                  <span className="ml-2 text-sm text-[#64748B]">
                     {skill.level}
                   </span>
                 </div>
@@ -311,8 +313,8 @@ async function handleSave() {
           </section>
 
           {/* Interests */}
-          <section className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 className="mb-5 text-xl font-semibold">
+          <section className="rounded-3xl border border-[#E5E7EB] bg-white p-6 shadow-sm shadow-purple-100/40">
+            <h2 className="mb-5 text-xl font-bold tracking-tight text-[#172033]">
               Interests
             </h2>
 
@@ -320,7 +322,7 @@ async function handleSave() {
               {profile.interests.map((interest) => (
                 <span
                   key={interest}
-                  className="rounded-full bg-slate-800 px-4 py-2"
+                  className="rounded-full border border-[#E9D5FF] bg-[#F3E8FF] px-4 py-2 text-[#6D28D9]"
                 >
                   {interest}
                 </span>
@@ -329,14 +331,14 @@ async function handleSave() {
           </section>
 
           {/* Preferences */}
-          <section className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 className="mb-5 text-xl font-semibold">
+          <section className="rounded-3xl border border-[#E5E7EB] bg-white p-6 shadow-sm shadow-purple-100/40">
+            <h2 className="mb-5 text-xl font-bold tracking-tight text-[#172033]">
               Preferences
             </h2>
 
             <div className="space-y-5">
               <div>
-                <p className="mb-2 text-sm text-slate-500">
+                <p className="mb-2 text-sm font-medium text-[#64748B]">
                   Preferred Locations
                 </p>
 
@@ -344,7 +346,7 @@ async function handleSave() {
                   {profile.preferredLocations.map((location) => (
                     <span
                       key={location}
-                      className="rounded-full bg-slate-800 px-4 py-2"
+                      className="rounded-full border border-[#E9D5FF] bg-[#F3E8FF] px-4 py-2 text-[#6D28D9]"
                     >
                       {location}
                     </span>
@@ -353,7 +355,7 @@ async function handleSave() {
               </div>
 
               <div>
-                <p className="mb-2 text-sm text-slate-500">
+                <p className="mb-2 text-sm font-medium text-[#64748B]">
                   Preferred Event Types
                 </p>
 
@@ -361,7 +363,7 @@ async function handleSave() {
                   {profile.preferredEventTypes.map((eventType) => (
                     <span
                       key={eventType}
-                      className="rounded-full bg-slate-800 px-4 py-2"
+                      className="rounded-full border border-[#E9D5FF] bg-[#F3E8FF] px-4 py-2 text-[#6D28D9]"
                     >
                       {eventType}
                     </span>
@@ -370,7 +372,7 @@ async function handleSave() {
               </div>
 
               <div>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm font-medium text-[#64748B]">
                   Team Availability
                 </p>
 
