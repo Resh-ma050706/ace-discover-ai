@@ -4,19 +4,31 @@
   "college": "Engineering College",
   "degree": "B.Tech",
   "department": "AI & Data Science",
-  "year": 2,
+  "studyYear": 2,
   "skills": [
-    "Python",
-    "Machine Learning",
-    "Data Science"
+    {
+      "name": "Python",
+      "level": "Beginner"
+    },
+    {
+      "name": "Machine Learning",
+      "level": "Beginner"
+    },
+    {
+      "name": "Data Science",
+      "level": "Beginner"
+    }
   ],
   "interests": [
     "Artificial Intelligence",
     "Hackathons"
   ],
-  "preferredLocation": "Chennai",
+  "preferredLocations": [
+    "Chennai"
+  ],
   "preferredEventTypes": [
     "Hackathon",
     "Workshop"
-  ]
+  ],
+  "teamAvailability": "Individual"
 }
