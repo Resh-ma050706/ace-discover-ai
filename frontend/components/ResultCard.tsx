@@ -1,7 +1,9 @@
 type ResultCardProps = {
   event: {
+    id: string;
     title: string;
     description?: string;
+    location?: string;
     matchPercentage: number;
     eligibilityStatus: string;
     matchReasons: string[];
@@ -17,9 +19,15 @@ export default function ResultCard({ event }: ResultCardProps) {
     <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md transition hover:shadow-lg">
 
       {/* Event Title */}
-      <h3 className="text-xl font-bold text-gray-900">
-        {event.title}
-      </h3>
+      <div>
+        <p className="text-sm font-medium text-purple-600">
+          {event.location ? `📍 ${event.location}` : "Opportunity"}
+        </p>
+
+        <h3 className="mt-1 text-xl font-bold text-gray-900">
+          {event.title}
+        </h3>
+      </div>
 
       {/* Description */}
       {event.description && (
@@ -43,6 +51,7 @@ export default function ResultCard({ event }: ResultCardProps) {
 
       {/* Match Reasons */}
       <div className="mt-5">
+
         <h4 className="font-semibold text-gray-900">
           Why this matches you
         </h4>
@@ -54,11 +63,13 @@ export default function ResultCard({ event }: ResultCardProps) {
             </li>
           ))}
         </ul>
+
       </div>
 
       {/* Missing Requirements */}
       {event.missingRequirements.length > 0 && (
         <div className="mt-5">
+
           <h4 className="font-semibold text-gray-900">
             Requirements to improve eligibility
           </h4>
@@ -70,22 +81,26 @@ export default function ResultCard({ event }: ResultCardProps) {
               </li>
             ))}
           </ul>
+
         </div>
       )}
 
       {/* Registration Deadline */}
       <div className="mt-5 rounded-xl bg-orange-50 p-4">
+
         <p className="text-sm text-gray-500">
           Registration Deadline
         </p>
 
         <p className="font-semibold text-orange-700">
-          {event.registrationDeadline}
+          📅 {event.registrationDeadline}
         </p>
+
       </div>
 
       {/* Suggested Action */}
       <div className="mt-5">
+
         <p className="text-sm text-gray-500">
           Suggested Action
         </p>
@@ -93,16 +108,15 @@ export default function ResultCard({ event }: ResultCardProps) {
         <p className="mt-1 font-medium text-purple-700">
           {event.suggestedNextAction}
         </p>
+
       </div>
 
-      {/* Registration Link */}
+      {/* View Event Details */}
       <a
-        href={event.registrationLink}
-        target="_blank"
-        rel="noopener noreferrer"
+        href={`/event/${event.id}`}
         className="mt-6 block rounded-xl bg-purple-600 px-5 py-3 text-center font-semibold text-white hover:bg-purple-700"
       >
-        View / Register →
+        View Details →
       </a>
 
     </div>
