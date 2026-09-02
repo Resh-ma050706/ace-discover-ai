@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "seed": "node src/database/seedEvents.js"
+    "seed": "node src/database/seedEvents.js",
+    "build:search": "tsc"
+    "seed":"node src/database/seedEvents.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,9 @@
     "pg": "^8.23.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "@types/node": "^26.4.1",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
   }
 }

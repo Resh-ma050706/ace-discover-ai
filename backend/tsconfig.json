@@ -4,6 +4,10 @@
     "module": "CommonJS",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+  "include": ["services/search/**/*.ts"],
+  "exclude": ["services/search/test.ts"]
 }
