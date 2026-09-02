@@ -1,0 +1,22 @@
+[
+  {
+    "id": "event001",
+    "title": "AI Hackathon 2026",
+    "description": "AI and Machine Learning hackathon for engineering students.",
+    "location": "Chennai",
+    "eventType": "Hackathon",
+    "eligibility": "Engineering students",
+    "registrationDeadline": "2026-09-15",
+    "registrationLink": "https://example.com/register"
+  },
+  {
+    "id": "event002",
+    "title": "Data Science Workshop",
+    "description": "Workshop covering data science and machine learning.",
+    "location": "Chennai",
+    "eventType": "Workshop",
+    "eligibility": "College students",
+    "registrationDeadline": "2026-09-20",
+    "registrationLink": "https://example.com/register"
+  }
+]
