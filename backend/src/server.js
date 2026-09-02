@@ -5,6 +5,7 @@ const pool = require("./config/database");
 const eventRoutes = require("./routes/eventRoutes");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const savedEventRoutes = require("./routes/savedEventRoutes");
 const app = express();
 
 app.use(
@@ -17,7 +18,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/profile", profileRoutes);
-
+app.use("/api/saved-events", savedEventRoutes);
 app.get("/api/health", async (req, res) => {
   try {
     const result = await pool.query("SELECT NOW() AS database_time");
