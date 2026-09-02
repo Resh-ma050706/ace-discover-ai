@@ -163,5 +163,164 @@
     "sourceUrl": "https://www.allcollegeevent.com/events",
     "lastSyncedAt": "2026-09-01T10:00:00Z",
     "demoEnriched": true
+  },
+  {
+    "id": 106,
+    "title": "VYUGAM 2.0",
+    "description": "A national-level technical symposium featuring coding, design, presentation and innovation challenges.",
+    "eventType": "Technical Symposium",
+    "domains": ["Programming", "Web Development", "Innovation"],
+    "location": "Coimbatore",
+    "mode": "Offline",
+    "venue": "P.A. College of Engineering and Technology",
+    "eventStartDate": "2026-09-24",
+    "eventEndDate": "2026-09-24",
+    "registrationDeadline": "2026-09-18",
+    "eligibleDegrees": ["B.E", "B.Tech"],
+    "eligibleDepartments": [
+      "Computer Science",
+      "Information Technology",
+      "AI and Data Science",
+      "Electronics and Communication"
+    ],
+    "eligibleYears": [1, 2, 3, 4],
+    "requiredSkills": [
+      {
+        "name": "Problem Solving",
+        "minimumLevel": "Beginner"
+      }
+    ],
+    "minimumTeamSize": 1,
+    "maximumTeamSize": 3,
+    "fee": 0,
+    "organizer": "P.A. College of Engineering and Technology",
+    "verified": true,
+    "status": "ACTIVE",
+    "sourceUrl": "https://www.allcollegeevent.com/events",
+    "lastSyncedAt": "2026-09-02T06:00:00Z",
+    "demoEnriched": true
+  },
+  {
+    "id": 107,
+    "title": "Concreteverse '26",
+    "description": "A national-level civil engineering symposium with technical competitions and project presentations.",
+    "eventType": "Technical Symposium",
+    "domains": [
+      "Civil Engineering",
+      "Construction Technology",
+      "Sustainable Design"
+    ],
+    "location": "Coimbatore",
+    "mode": "Offline",
+    "venue": "KPR Institute of Engineering and Technology",
+    "eventStartDate": "2026-09-25",
+    "eventEndDate": "2026-09-25",
+    "registrationDeadline": "2026-09-19",
+    "eligibleDegrees": ["B.E", "B.Tech"],
+    "eligibleDepartments": ["Civil Engineering"],
+    "eligibleYears": [1, 2, 3, 4],
+    "requiredSkills": [
+      {
+        "name": "Civil Engineering",
+        "minimumLevel": "Beginner"
+      }
+    ],
+    "minimumTeamSize": 1,
+    "maximumTeamSize": 4,
+    "fee": 250,
+    "organizer": "KPR Institute of Engineering and Technology",
+    "verified": true,
+    "status": "ACTIVE",
+    "sourceUrl": "https://www.allcollegeevent.com/events",
+    "lastSyncedAt": "2026-09-02T06:00:00Z",
+    "demoEnriched": true
+  },
+  {
+    "id": 108,
+    "title": "Plant Tissue Culture Training 2026",
+    "description": "Hands-on training covering plant tissue culture, media preparation and micropropagation techniques.",
+    "eventType": "Workshop",
+    "domains": ["Biotechnology", "Plant Science", "Life Sciences"],
+    "location": "Coimbatore",
+    "mode": "Offline",
+    "venue": "Biotechnology Training Centre",
+    "eventStartDate": "2026-12-15",
+    "eventEndDate": "2026-12-18",
+    "registrationDeadline": "2026-12-05",
+    "eligibleDegrees": ["B.Sc", "B.Tech", "M.Sc", "M.Tech"],
+    "eligibleDepartments": ["Biotechnology", "Agriculture", "Life Sciences"],
+    "eligibleYears": [1, 2, 3, 4],
+    "requiredSkills": [],
+    "minimumTeamSize": 1,
+    "maximumTeamSize": 1,
+    "fee": 3540,
+    "organizer": "Biotechnology Training Centre",
+    "verified": true,
+    "status": "ACTIVE",
+    "sourceUrl": "https://www.allcollegeevent.com/events",
+    "lastSyncedAt": "2026-09-02T06:00:00Z",
+    "demoEnriched": true
+  },
+  {
+    "id": 109,
+    "title": "GENESIS '26 - Valorant",
+    "description": "A competitive tactical esports event testing teamwork, communication and strategic gameplay.",
+    "eventType": "Competition",
+    "domains": ["Esports", "Gaming", "Team Strategy"],
+    "location": "Chennai",
+    "mode": "Offline",
+    "venue": "Chennai Engineering Campus",
+    "eventStartDate": "2026-09-02",
+    "eventEndDate": "2026-09-02",
+    "registrationDeadline": "2026-09-02",
+    "eligibleDegrees": ["B.E", "B.Tech", "B.Sc", "BCA"],
+    "eligibleDepartments": ["All Departments"],
+    "eligibleYears": [1, 2, 3, 4],
+    "requiredSkills": [
+      {
+        "name": "Teamwork",
+        "minimumLevel": "Beginner"
+      }
+    ],
+    "minimumTeamSize": 5,
+    "maximumTeamSize": 5,
+    "fee": 500,
+    "organizer": "GENESIS '26",
+    "verified": true,
+    "status": "ACTIVE",
+    "sourceUrl": "https://www.allcollegeevent.com/events",
+    "lastSyncedAt": "2026-09-02T06:00:00Z",
+    "demoEnriched": true
+  },
+  {
+    "id": 110,
+    "title": "GENESIS '26 - Lost in Space",
+    "description": "A team treasure hunt involving clues, riddles, puzzles and rapid problem-solving challenges.",
+    "eventType": "Competition",
+    "domains": ["Problem Solving", "Teamwork", "Creative Thinking"],
+    "location": "Chennai",
+    "mode": "Offline",
+    "venue": "Chennai Engineering Campus",
+    "eventStartDate": "2026-09-02",
+    "eventEndDate": "2026-09-02",
+    "registrationDeadline": "2026-09-02",
+    "eligibleDegrees": ["B.E", "B.Tech", "B.Sc", "BCA"],
+    "eligibleDepartments": ["All Departments"],
+    "eligibleYears": [1, 2, 3, 4],
+    "requiredSkills": [
+      {
+        "name": "Problem Solving",
+        "minimumLevel": "Beginner"
+      }
+    ],
+    "minimumTeamSize": 2,
+    "maximumTeamSize": 4,
+    "fee": 225,
+    "organizer": "GENESIS '26",
+    "verified": true,
+    "status": "ACTIVE",
+    "sourceUrl": "https://www.allcollegeevent.com/events",
+    "lastSyncedAt": "2026-09-02T06:00:00Z",
+    "demoEnriched": true
   }
 ]
