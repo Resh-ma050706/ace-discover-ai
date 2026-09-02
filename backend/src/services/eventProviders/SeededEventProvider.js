@@ -39,7 +39,8 @@ class SeededEventProvider {
       ORDER BY event_start_date ASC
     `);
 
-    return result.rows.map(formatEvent);
+    console.log("EVENT ROWS:", result.rows);
+return result.rows.map(formatEvent);
   }
 
   async getEventById(id) {

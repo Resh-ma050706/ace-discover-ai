@@ -1,16 +1,33 @@
 type ResultCardProps = {
   event: {
-    id: string;
+    id: string | number;
     title: string;
     description?: string;
+    eventType?: string;
+    domains?: string[];
     location?: string;
-    matchPercentage: number;
-    eligibilityStatus: string;
-    matchReasons: string[];
-    missingRequirements: string[];
-    registrationDeadline: string;
-    suggestedNextAction: string;
-    registrationLink: string;
+    mode?: string;
+    venue?: string;
+    eventStartDate?: string;
+    eventEndDate?: string;
+    registrationDeadline?: string;
+    eligibleDegrees?: string[];
+    eligibleDepartments?: string[];
+    eligibleYears?: (string | number)[];
+    requiredSkills?: (
+      | string
+      | {
+          name: string;
+          minimumLevel?: string;
+        }
+    )[];
+    minimumTeamSize?: number;
+    maximumTeamSize?: number;
+    fee?: number;
+    organizer?: string;
+    verified?: boolean;
+    status?: string;
+    sourceUrl?: string;
   };
 };
 
@@ -18,106 +35,235 @@ export default function ResultCard({ event }: ResultCardProps) {
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md transition hover:shadow-lg">
 
-      {/* Event Title */}
-      <div>
-        <p className="text-sm font-medium text-purple-600">
-          {event.location ? `📍 ${event.location}` : "Opportunity"}
-        </p>
+      {/* EVENT TYPE */}
+      <div className="flex flex-wrap items-center gap-2">
+        {event.eventType && (
+          <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-semibold text-purple-700">
+            {event.eventType}
+          </span>
+        )}
 
-        <h3 className="mt-1 text-xl font-bold text-gray-900">
-          {event.title}
-        </h3>
+        {event.verified && (
+          <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+            ✓ Verified
+          </span>
+        )}
       </div>
 
-      {/* Description */}
+      {/* TITLE */}
+      <h3 className="mt-3 text-2xl font-bold text-gray-900">
+        {event.title}
+      </h3>
+
+      {/* ORGANIZER */}
+      {event.organizer && (
+        <p className="mt-2 text-sm font-medium text-purple-600">
+          Organized by {event.organizer}
+        </p>
+      )}
+
+      {/* DESCRIPTION */}
       {event.description && (
-        <p className="mt-2 text-gray-600">
+        <p className="mt-3 text-gray-600">
           {event.description}
         </p>
       )}
 
-      {/* Match Percentage and Eligibility */}
-      <div className="mt-5 flex flex-wrap gap-3">
+      {/* BASIC DETAILS */}
+      <div className="mt-5 grid gap-3 sm:grid-cols-2">
 
-        <span className="rounded-full bg-purple-100 px-4 py-2 text-sm font-semibold text-purple-700">
-          🎯 {event.matchPercentage}% Match
-        </span>
+        {event.location && (
+          <div className="rounded-xl bg-blue-50 p-4">
+            <p className="text-sm text-gray-500">
+              📍 Location
+            </p>
+            <p className="mt-1 font-semibold text-blue-700">
+              {event.location}
+            </p>
+          </div>
+        )}
 
-        <span className="rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
-          ✓ {event.eligibilityStatus}
-        </span>
+        {event.mode && (
+          <div className="rounded-xl bg-green-50 p-4">
+            <p className="text-sm text-gray-500">
+              💻 Mode
+            </p>
+            <p className="mt-1 font-semibold text-green-700">
+              {event.mode}
+            </p>
+          </div>
+        )}
+
+        {event.venue && (
+          <div className="rounded-xl bg-purple-50 p-4">
+            <p className="text-sm text-gray-500">
+              🏢 Venue
+            </p>
+            <p className="mt-1 font-semibold text-purple-700">
+              {event.venue}
+            </p>
+          </div>
+        )}
+
+        <div className="rounded-xl bg-orange-50 p-4">
+          <p className="text-sm text-gray-500">
+            💰 Fee
+          </p>
+          <p className="mt-1 font-semibold text-orange-700">
+            {event.fee === 0 ? "Free" : `₹${event.fee}`}
+          </p>
+        </div>
 
       </div>
 
-      {/* Match Reasons */}
-      <div className="mt-5">
-
-        <h4 className="font-semibold text-gray-900">
-          Why this matches you
-        </h4>
-
-        <ul className="mt-2 space-y-1 text-sm text-gray-600">
-          {event.matchReasons.map((reason, index) => (
-            <li key={index}>
-              ✓ {reason}
-            </li>
-          ))}
-        </ul>
-
-      </div>
-
-      {/* Missing Requirements */}
-      {event.missingRequirements.length > 0 && (
+      {/* DOMAINS */}
+      {event.domains && event.domains.length > 0 && (
         <div className="mt-5">
-
           <h4 className="font-semibold text-gray-900">
-            Requirements to improve eligibility
+            Domains
           </h4>
 
-          <ul className="mt-2 space-y-1 text-sm text-gray-600">
-            {event.missingRequirements.map((item, index) => (
-              <li key={index}>
-                • {item}
-              </li>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {event.domains.map((domain, index) => (
+              <span
+                key={index}
+                className="rounded-full bg-purple-50 px-3 py-1 text-sm text-purple-700"
+              >
+                {domain}
+              </span>
             ))}
-          </ul>
-
+          </div>
         </div>
       )}
 
-      {/* Registration Deadline */}
-      <div className="mt-5 rounded-xl bg-orange-50 p-4">
+      {/* REQUIRED SKILLS */}
+      {event.requiredSkills && event.requiredSkills.length > 0 && (
+        <div className="mt-5">
+          <h4 className="font-semibold text-gray-900">
+            Required Skills
+          </h4>
 
-        <p className="text-sm text-gray-500">
-          Registration Deadline
-        </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {event.requiredSkills.map((skill, index) => (
+              <span
+                key={index}
+                className="rounded-full bg-blue-50 px-3 py-1 text-sm text-blue-700"
+              >
+                {typeof skill === "string"
+                  ? skill
+                  : `${skill.name}${
+                      skill.minimumLevel
+                        ? ` (${skill.minimumLevel})`
+                        : ""
+                    }`}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
-        <p className="font-semibold text-orange-700">
-          📅 {event.registrationDeadline}
-        </p>
+      {/* ELIGIBILITY */}
+      <div className="mt-5 rounded-xl bg-gray-50 p-4">
+        <h4 className="font-semibold text-gray-900">
+          Eligibility
+        </h4>
 
+        {event.eligibleDegrees &&
+          event.eligibleDegrees.length > 0 && (
+            <p className="mt-2 text-sm text-gray-600">
+              <strong>Degrees:</strong>{" "}
+              {event.eligibleDegrees.join(", ")}
+            </p>
+          )}
+
+        {event.eligibleDepartments &&
+          event.eligibleDepartments.length > 0 && (
+            <p className="mt-1 text-sm text-gray-600">
+              <strong>Departments:</strong>{" "}
+              {event.eligibleDepartments.join(", ")}
+            </p>
+          )}
+
+        {event.eligibleYears &&
+          event.eligibleYears.length > 0 && (
+            <p className="mt-1 text-sm text-gray-600">
+              <strong>Years:</strong>{" "}
+              {event.eligibleYears.join(", ")}
+            </p>
+          )}
       </div>
 
-      {/* Suggested Action */}
-      <div className="mt-5">
+      {/* TEAM SIZE */}
+      {(event.minimumTeamSize || event.maximumTeamSize) && (
+        <div className="mt-5 rounded-xl bg-pink-50 p-4">
+          <p className="text-sm text-gray-500">
+            👥 Team Size
+          </p>
 
-        <p className="text-sm text-gray-500">
-          Suggested Action
-        </p>
+          <p className="mt-1 font-semibold text-pink-700">
+            {event.minimumTeamSize === event.maximumTeamSize
+              ? `${event.minimumTeamSize}`
+              : `${event.minimumTeamSize} - ${event.maximumTeamSize}`}
+          </p>
+        </div>
+      )}
 
-        <p className="mt-1 font-medium text-purple-700">
-          {event.suggestedNextAction}
-        </p>
+      {/* EVENT DATE */}
+      {(event.eventStartDate || event.eventEndDate) && (
+        <div className="mt-5 rounded-xl bg-blue-50 p-4">
+          <p className="text-sm text-gray-500">
+            📅 Event Date
+          </p>
 
-      </div>
+          <p className="mt-1 font-semibold text-blue-700">
+            {event.eventStartDate
+              ? new Date(event.eventStartDate).toLocaleDateString()
+              : ""}
 
-      {/* View Event Details */}
+            {event.eventEndDate
+              ? ` - ${new Date(
+                  event.eventEndDate
+                ).toLocaleDateString()}`
+              : ""}
+          </p>
+        </div>
+      )}
+
+      {/* REGISTRATION DEADLINE */}
+      {event.registrationDeadline && (
+        <div className="mt-5 rounded-xl bg-orange-50 p-4">
+          <p className="text-sm text-gray-500">
+            Registration Deadline
+          </p>
+
+          <p className="font-semibold text-orange-700">
+            📅{" "}
+            {new Date(
+              event.registrationDeadline
+            ).toLocaleDateString()}
+          </p>
+        </div>
+      )}
+
+      {/* VIEW DETAILS */}
       <a
         href={`/event/${event.id}`}
         className="mt-6 block rounded-xl bg-purple-600 px-5 py-3 text-center font-semibold text-white hover:bg-purple-700"
       >
         View Details →
       </a>
+
+      {/* EXTERNAL REGISTRATION */}
+      {event.sourceUrl && (
+        <a
+          href={event.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 block rounded-xl border border-purple-200 px-5 py-3 text-center font-semibold text-purple-700 hover:bg-purple-50"
+        >
+          Registration / Official Link ↗
+        </a>
+      )}
 
     </div>
   );

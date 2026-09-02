@@ -10,11 +10,28 @@ export default function Home() {
   const [searched, setSearched] = useState(false);
   const [searchData, setSearchData] = useState<any>(null);
 
+  // -----------------------------
+  // FILTER STATES
+  // -----------------------------
+  const [eventTypeFilter, setEventTypeFilter] = useState("All");
+  const [domainFilter, setDomainFilter] = useState("All");
+  const [locationFilter, setLocationFilter] = useState("All");
+  const [modeFilter, setModeFilter] = useState("All");
+
+  // -----------------------------
+  // SEARCH
+  // -----------------------------
   const handleSearch = async () => {
     if (!query.trim()) return;
 
     setLoading(true);
     setSearched(false);
+
+    // Reset filters for every new search
+    setEventTypeFilter("All");
+    setDomainFilter("All");
+    setLocationFilter("All");
+    setModeFilter("All");
 
     try {
       const response = await searchOpportunities(query);
@@ -26,6 +43,96 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // -----------------------------
+  // ALL EVENTS FROM SEARCH
+  // -----------------------------
+  const allResults = searchData?.results || [];
+
+  // -----------------------------
+  // FILTER OPTIONS
+  // -----------------------------
+  const eventTypes = [
+    "All",
+    ...Array.from(
+      new Set(
+        allResults
+          .map((event: any) => event.eventType)
+          .filter(Boolean)
+      )
+    ),
+  ];
+
+  const domains = [
+    "All",
+    ...Array.from(
+      new Set(
+        allResults
+          .flatMap((event: any) => event.domains || [])
+          .filter(Boolean)
+      )
+    ),
+  ];
+
+  const locations = [
+    "All",
+    ...Array.from(
+      new Set(
+        allResults
+          .map((event: any) => event.location)
+          .filter(Boolean)
+      )
+    ),
+  ];
+
+  const modes = [
+    "All",
+    ...Array.from(
+      new Set(
+        allResults
+          .map((event: any) => event.mode)
+          .filter(Boolean)
+      )
+    ),
+  ];
+
+  // -----------------------------
+  // APPLY FILTERS
+  // -----------------------------
+  const filteredResults = allResults.filter((event: any) => {
+    const matchesEventType =
+      eventTypeFilter === "All" ||
+      event.eventType === eventTypeFilter;
+
+    const matchesDomain =
+      domainFilter === "All" ||
+      (event.domains || []).includes(domainFilter);
+
+    const matchesLocation =
+      locationFilter === "All" ||
+      event.location === locationFilter;
+
+    const matchesMode =
+      modeFilter === "All" ||
+      event.mode === modeFilter;
+
+    return (
+      matchesEventType &&
+      matchesDomain &&
+      matchesLocation &&
+      matchesMode
+    );
+  });
+
+  // -----------------------------
+  // CLEAR FILTERS
+  // -----------------------------
+  const clearFilters = () => {
+    setEventTypeFilter("All");
+    setDomainFilter("All");
+    setLocationFilter("All");
+    setModeFilter("All");
   };
 
   return (
@@ -149,7 +256,6 @@ export default function Home() {
               {/* INTERPRETED QUERY */}
               <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
 
-                {/* DOMAIN */}
                 <div className="rounded-xl bg-purple-50 p-4">
                   <p className="text-sm text-gray-500">
                     Domain
@@ -160,7 +266,6 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* EVENT TYPE */}
                 <div className="rounded-xl bg-blue-50 p-4">
                   <p className="text-sm text-gray-500">
                     Event Type
@@ -171,7 +276,6 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* LOCATION */}
                 <div className="rounded-xl bg-green-50 p-4">
                   <p className="text-sm text-gray-500">
                     Location
@@ -182,7 +286,6 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* TIME */}
                 <div className="rounded-xl bg-orange-50 p-4">
                   <p className="text-sm text-gray-500">
                     Time
@@ -193,7 +296,6 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* STUDENT TYPE */}
                 <div className="rounded-xl bg-pink-50 p-4">
                   <p className="text-sm text-gray-500">
                     Student
@@ -208,23 +310,176 @@ export default function Home() {
 
             </div>
 
-            {/* RECOMMENDED OPPORTUNITIES */}
-            <div className="mt-10">
+            {/* FILTER SECTION */}
+            <div className="mt-8 rounded-2xl bg-white p-6 shadow-lg">
 
-              <h3 className="mb-5 text-2xl font-bold text-gray-900">
+              <div className="flex flex-col gap-4">
+
+                <div className="flex items-center justify-between">
+
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">
+                      🔎 Filters
+                    </h3>
+
+                    <p className="text-sm text-gray-500">
+                      Refine your search results
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={clearFilters}
+                    className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50"
+                  >
+                    Clear Filters
+                  </button>
+
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+                  {/* EVENT TYPE */}
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                      Event Type
+                    </label>
+
+                    <select
+                      value={eventTypeFilter}
+                      onChange={(e) =>
+                        setEventTypeFilter(e.target.value)
+                      }
+                      className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                    >
+                      {eventTypes.map((type: any) => (
+                        <option key={type} value={type}>
+                          {type === "All" ? "All Event Types" : type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* DOMAIN */}
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                      Domain
+                    </label>
+
+                    <select
+                      value={domainFilter}
+                      onChange={(e) =>
+                        setDomainFilter(e.target.value)
+                      }
+                      className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                    >
+                      {domains.map((domain: any) => (
+                        <option key={domain} value={domain}>
+                          {domain === "All" ? "All Domains" : domain}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* LOCATION */}
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                      Location
+                    </label>
+
+                    <select
+                      value={locationFilter}
+                      onChange={(e) =>
+                        setLocationFilter(e.target.value)
+                      }
+                      className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                    >
+                      {locations.map((location: any) => (
+                        <option key={location} value={location}>
+                          {location === "All"
+                            ? "All Locations"
+                            : location}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* MODE */}
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                      Mode
+                    </label>
+
+                    <select
+                      value={modeFilter}
+                      onChange={(e) =>
+                        setModeFilter(e.target.value)
+                      }
+                      className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                    >
+                      {modes.map((mode: any) => (
+                        <option key={mode} value={mode}>
+                          {mode === "All" ? "All Modes" : mode}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* RESULTS COUNT */}
+            <div className="mt-8 flex items-center justify-between">
+
+              <h3 className="text-2xl font-bold text-gray-900">
                 🎯 Recommended Opportunities
               </h3>
 
-              <div className="grid gap-6">
+              <span className="rounded-full bg-purple-100 px-4 py-2 text-sm font-semibold text-purple-700">
+                {filteredResults.length}{" "}
+                {filteredResults.length === 1
+                  ? "opportunity"
+                  : "opportunities"}
+              </span>
 
-                {searchData.results?.map((event: any) => (
+            </div>
+
+            {/* FILTERED RESULTS */}
+            <div className="mt-5 grid gap-6">
+
+              {filteredResults.length > 0 ? (
+                filteredResults.map((event: any) => (
                   <ResultCard
                     key={event.id}
                     event={event}
                   />
-                ))}
+                ))
+              ) : (
+                <div className="rounded-2xl bg-white p-10 text-center shadow-lg">
 
-              </div>
+                  <div className="text-4xl">
+                    🔍
+                  </div>
+
+                  <h3 className="mt-4 text-lg font-bold text-gray-900">
+                    No matching opportunities
+                  </h3>
+
+                  <p className="mt-2 text-sm text-gray-500">
+                    Try changing or clearing your filters.
+                  </p>
+
+                  <button
+                    onClick={clearFilters}
+                    className="mt-5 rounded-lg bg-purple-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-purple-700"
+                  >
+                    Clear Filters
+                  </button>
+
+                </div>
+              )}
 
             </div>
 
