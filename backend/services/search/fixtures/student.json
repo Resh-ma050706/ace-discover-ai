@@ -1,0 +1,22 @@
+{
+  "name": "Student",
+  "email": "student@example.com",
+  "college": "Engineering College",
+  "degree": "B.Tech",
+  "department": "AI & Data Science",
+  "year": 2,
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "Data Science"
+  ],
+  "interests": [
+    "Artificial Intelligence",
+    "Hackathons"
+  ],
+  "preferredLocation": "Chennai",
+  "preferredEventTypes": [
+    "Hackathon",
+    "Workshop"
+  ]
+}

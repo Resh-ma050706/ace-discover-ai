@@ -1,0 +1,45 @@
+[
+  {
+    "query": "Find AI hackathons for second-year engineering students in Chennai this month",
+    "expectedIntent": {
+      "domain": "artificial intelligence",
+      "eventType": "hackathon",
+      "location": "chennai",
+      "year": "2nd year"
+    },
+    "expectedTopResult": "event001"
+  },
+  {
+    "query": "Online web development workshops",
+    "expectedIntent": {
+      "domain": "web development",
+      "eventType": "workshop",
+      "mode": "online"
+    },
+    "expectedTopResult": null
+  },
+  {
+    "query": "Internships in data science for final year students",
+    "expectedIntent": {
+      "domain": "data science",
+      "eventType": "internship",
+      "year": "final year"
+    },
+    "expectedTopResult": null
+  },
+  {
+    "query": "Competitions this weekend near me",
+    "expectedIntent": {
+      "eventType": "competition"
+    },
+    "expectedTopResult": null
+  },
+  {
+    "query": "Conferences on cloud computing, any location",
+    "expectedIntent": {
+      "domain": "cloud computing",
+      "eventType": "conference"
+    },
+    "expectedTopResult": null
+  }
+]
