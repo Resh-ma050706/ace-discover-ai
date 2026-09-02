@@ -4,17 +4,45 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 type EventData = {
-  id: string;
+  id: string | number;
   title: string;
   description?: string;
   location?: string;
-  matchPercentage: number;
-  eligibilityStatus: string;
-  matchReasons: string[];
-  missingRequirements: string[];
-  registrationDeadline: string;
-  suggestedNextAction: string;
-  registrationLink: string;
+  eventType?: string;
+  domains?: string[];
+  mode?: string;
+  venue?: string;
+  organizer?: string;
+  verified?: boolean;
+  fee?: number;
+
+  matchPercentage?: number;
+
+  eligibilityStatus?: string;
+  matchReasons?: string[];
+  missingRequirements?: string[];
+  registrationDeadline?: string;
+  suggestedNextAction?: string;
+  registrationLink?: string;
+  sourceUrl?: string;
+
+  eventStartDate?: string;
+  eventEndDate?: string;
+
+  eligibleDegrees?: string[];
+  eligibleDepartments?: string[];
+  eligibleYears?: (string | number)[];
+
+  requiredSkills?: (
+    | string
+    | {
+        name: string;
+        minimumLevel?: string;
+      }
+  )[];
+
+  minimumTeamSize?: number;
+  maximumTeamSize?: number;
 };
 
 export default function EventDetails({
@@ -31,29 +59,44 @@ export default function EventDetails({
       try {
         const { id } = await params;
 
-        const response = await fetch("/mockSearchResponse.json");
+        const response = await fetch(
+          "http://localhost:5000/api/events"
+        );
 
         if (!response.ok) {
-          throw new Error("Failed to load event data");
+          throw new Error("Failed to load events");
         }
 
         const data = await response.json();
 
-        const selectedEvent = data.results?.find(
-          (item: EventData) => item.id === id
+        const events = data.events || [];
+
+        const selectedEvent = events.find(
+          (item: EventData) =>
+            String(item.id) === String(id)
         );
 
         if (selectedEvent) {
           setEvent(selectedEvent);
 
           const savedEvents = JSON.parse(
-            localStorage.getItem("savedOpportunities") || "[]"
+            localStorage.getItem(
+              "savedOpportunities"
+            ) || "[]"
           );
 
-          setSaved(savedEvents.includes(id));
+          setSaved(
+            savedEvents.some(
+              (savedId: string | number) =>
+                String(savedId) === String(id)
+            )
+          );
         }
       } catch (error) {
-        console.error("Event loading error:", error);
+        console.error(
+          "Event loading error:",
+          error
+        );
       } finally {
         setLoading(false);
       }
@@ -66,12 +109,15 @@ export default function EventDetails({
     if (!event) return;
 
     const savedEvents = JSON.parse(
-      localStorage.getItem("savedOpportunities") || "[]"
+      localStorage.getItem(
+        "savedOpportunities"
+      ) || "[]"
     );
 
     if (saved) {
       const updated = savedEvents.filter(
-        (id: string) => id !== event.id
+        (id: string | number) =>
+          String(id) !== String(event.id)
       );
 
       localStorage.setItem(
@@ -81,7 +127,10 @@ export default function EventDetails({
 
       setSaved(false);
     } else {
-      const updated = [...savedEvents, event.id];
+      const updated = [
+        ...savedEvents,
+        String(event.id),
+      ];
 
       localStorage.setItem(
         "savedOpportunities",
@@ -92,6 +141,7 @@ export default function EventDetails({
     }
   };
 
+  /* LOADING */
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-50 via-white to-blue-50">
@@ -104,6 +154,7 @@ export default function EventDetails({
     );
   }
 
+  /* EVENT NOT FOUND */
   if (!event) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-50 via-white to-blue-50 px-6">
@@ -129,58 +180,57 @@ export default function EventDetails({
     );
   }
 
+  const registrationLink =
+    event.registrationLink ||
+    event.sourceUrl;
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+    <main className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 px-6 py-10">
+      <div className="mx-auto max-w-5xl">
 
-      {/* HEADER */}
-      <header className="border-b bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        {/* BACK */}
+        <Link
+          href="/"
+          className="font-semibold text-purple-700 hover:underline"
+        >
+          ← Back to Results
+        </Link>
 
-          <div>
-            <h1 className="text-2xl font-bold text-purple-700">
-              ACE Discover AI
-            </h1>
+        {/* MAIN CARD */}
+        <div className="mt-6 rounded-3xl bg-white p-8 shadow-xl">
 
-            <p className="text-sm text-gray-500">
-              Your Personal Opportunity Finder
-            </p>
-          </div>
-
-          <Link
-            href="/"
-            className="rounded-xl border border-purple-200 px-4 py-2 text-sm font-semibold text-purple-700 hover:bg-purple-50"
-          >
-            ← Back
-          </Link>
-
-        </div>
-      </header>
-
-      {/* EVENT DETAILS */}
-      <section className="mx-auto max-w-4xl px-6 py-12">
-
-        {/* TOP CARD */}
-        <div className="rounded-3xl bg-white p-8 shadow-xl">
-
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+          {/* HEADER */}
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
 
             <div>
-              <div className="mb-3 inline-block rounded-full bg-purple-100 px-4 py-2 text-sm font-semibold text-purple-700">
-                🎯 Opportunity Details
+              <div className="flex flex-wrap gap-2">
+
+                {event.eventType && (
+                  <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-semibold text-purple-700">
+                    {event.eventType}
+                  </span>
+                )}
+
+                {event.verified && (
+                  <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                    ✓ Verified
+                  </span>
+                )}
+
               </div>
 
-              <h2 className="text-3xl font-bold text-gray-900">
+              <h1 className="mt-4 text-3xl font-bold text-gray-900">
                 {event.title}
-              </h2>
+              </h1>
 
-              {event.location && (
-                <p className="mt-3 text-gray-600">
-                  📍 {event.location}
+              {event.organizer && (
+                <p className="mt-2 font-medium text-purple-600">
+                  Organized by {event.organizer}
                 </p>
               )}
             </div>
 
-            {/* SAVE BUTTON */}
+            {/* SAVE */}
             <button
               onClick={handleSave}
               className={`rounded-xl px-5 py-3 font-semibold transition ${
@@ -194,16 +244,98 @@ export default function EventDetails({
 
           </div>
 
-          {/* MATCH + ELIGIBILITY */}
-          <div className="mt-8 flex flex-wrap gap-3">
+          {/* POSSIBILITY SCORE */}
+          {event.matchPercentage !== undefined && (
+            <div className="mt-8 rounded-2xl bg-purple-50 p-6">
 
-            <span className="rounded-full bg-purple-100 px-5 py-2 font-semibold text-purple-700">
-              🎯 {event.matchPercentage}% Match
-            </span>
+              <div className="flex items-center justify-between">
 
-            <span className="rounded-full bg-green-100 px-5 py-2 font-semibold text-green-700">
-              ✓ {event.eligibilityStatus}
-            </span>
+                <div>
+                  <p className="text-sm font-semibold text-gray-500">
+                    Possibility Score
+                  </p>
+
+                  <p className="mt-1 text-3xl font-bold text-purple-700">
+                    {event.matchPercentage}/100
+                  </p>
+                </div>
+
+                <div className="text-4xl">
+                  🎯
+                </div>
+
+              </div>
+
+              <div className="mt-4 h-3 overflow-hidden rounded-full bg-purple-100">
+                <div
+                  className="h-full rounded-full bg-purple-600 transition-all duration-500"
+                  style={{
+                    width: `${Math.min(
+                      Math.max(
+                        event.matchPercentage,
+                        0
+                      ),
+                      100
+                    )}%`,
+                  }}
+                />
+              </div>
+
+            </div>
+          )}
+
+          {/* BASIC DETAILS */}
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+
+            {event.location && (
+              <div className="rounded-xl bg-blue-50 p-4">
+                <p className="text-sm text-gray-500">
+                  📍 Location
+                </p>
+
+                <p className="mt-1 font-semibold text-blue-700">
+                  {event.location}
+                </p>
+              </div>
+            )}
+
+            {event.mode && (
+              <div className="rounded-xl bg-green-50 p-4">
+                <p className="text-sm text-gray-500">
+                  💻 Mode
+                </p>
+
+                <p className="mt-1 font-semibold text-green-700">
+                  {event.mode}
+                </p>
+              </div>
+            )}
+
+            {event.venue && (
+              <div className="rounded-xl bg-purple-50 p-4">
+                <p className="text-sm text-gray-500">
+                  🏢 Venue
+                </p>
+
+                <p className="mt-1 font-semibold text-purple-700">
+                  {event.venue}
+                </p>
+              </div>
+            )}
+
+            {event.fee !== undefined && (
+              <div className="rounded-xl bg-orange-50 p-4">
+                <p className="text-sm text-gray-500">
+                  💰 Fee
+                </p>
+
+                <p className="mt-1 font-semibold text-orange-700">
+                  {event.fee === 0
+                    ? "Free"
+                    : `₹${event.fee}`}
+                </p>
+              </div>
+            )}
 
           </div>
 
@@ -220,119 +352,260 @@ export default function EventDetails({
             </div>
           )}
 
-          {/* WHY MATCH */}
-          <div className="mt-8">
+          {/* DOMAINS */}
+          {event.domains &&
+            event.domains.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-xl font-bold text-gray-900">
+                  Domains
+                </h3>
 
-            <h3 className="text-xl font-bold text-gray-900">
-              Why this matches you
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {event.domains.map(
+                    (domain, index) => (
+                      <span
+                        key={index}
+                        className="rounded-full bg-purple-50 px-3 py-1 text-sm text-purple-700"
+                      >
+                        {domain}
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
+            )}
+
+          {/* REQUIRED SKILLS */}
+          {event.requiredSkills &&
+            event.requiredSkills.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-xl font-bold text-gray-900">
+                  Required Skills
+                </h3>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {event.requiredSkills.map(
+                    (skill, index) => (
+                      <span
+                        key={index}
+                        className="rounded-full bg-blue-50 px-3 py-1 text-sm text-blue-700"
+                      >
+                        {typeof skill === "string"
+                          ? skill
+                          : `${skill.name}${
+                              skill.minimumLevel
+                                ? ` (${skill.minimumLevel})`
+                                : ""
+                            }`}
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
+            )}
+
+          {/* ELIGIBILITY */}
+          <div className="mt-8 rounded-xl bg-gray-50 p-5">
+
+            <h3 className="font-bold text-gray-900">
+              Eligibility
             </h3>
 
-            <div className="mt-4 space-y-3">
+            {event.eligibleDegrees &&
+              event.eligibleDegrees.length > 0 && (
+                <p className="mt-2 text-sm text-gray-600">
+                  <strong>Degrees:</strong>{" "}
+                  {event.eligibleDegrees.join(", ")}
+                </p>
+              )}
 
-              {event.matchReasons.map((reason, index) => (
-                <div
-                  key={index}
-                  className="rounded-xl bg-green-50 p-4 text-gray-700"
-                >
-                  ✓ {reason}
-                </div>
-              ))}
+            {event.eligibleDepartments &&
+              event.eligibleDepartments.length > 0 && (
+                <p className="mt-1 text-sm text-gray-600">
+                  <strong>Departments:</strong>{" "}
+                  {event.eligibleDepartments.join(", ")}
+                </p>
+              )}
 
-            </div>
+            {event.eligibleYears &&
+              event.eligibleYears.length > 0 && (
+                <p className="mt-1 text-sm text-gray-600">
+                  <strong>Years:</strong>{" "}
+                  {event.eligibleYears.join(", ")}
+                </p>
+              )}
+
+            {event.eligibilityStatus && (
+              <p className="mt-3 font-semibold text-green-700">
+                ✓ {event.eligibilityStatus}
+              </p>
+            )}
 
           </div>
 
-          {/* REQUIREMENTS */}
-          {event.missingRequirements?.length > 0 && (
-            <div className="mt-8">
+          {/* TEAM SIZE */}
+          {(event.minimumTeamSize !== undefined ||
+            event.maximumTeamSize !== undefined) && (
+            <div className="mt-8 rounded-xl bg-pink-50 p-5">
 
-              <h3 className="text-xl font-bold text-gray-900">
-                Requirements to improve eligibility
-              </h3>
+              <p className="text-sm text-gray-500">
+                👥 Team Size
+              </p>
 
-              <div className="mt-4 space-y-3">
-
-                {event.missingRequirements.map((item, index) => (
-                  <div
-                    key={index}
-                    className="rounded-xl bg-yellow-50 p-4 text-gray-700"
-                  >
-                    • {item}
-                  </div>
-                ))}
-
-              </div>
+              <p className="mt-1 font-semibold text-pink-700">
+                {event.minimumTeamSize !== undefined &&
+                event.maximumTeamSize !== undefined
+                  ? event.minimumTeamSize ===
+                    event.maximumTeamSize
+                    ? `${event.minimumTeamSize}`
+                    : `${event.minimumTeamSize} - ${event.maximumTeamSize}`
+                  : event.minimumTeamSize !== undefined
+                  ? `${event.minimumTeamSize}`
+                  : `${event.maximumTeamSize}`}
+              </p>
 
             </div>
           )}
 
-          {/* DEADLINE */}
-          <div className="mt-8 rounded-2xl bg-orange-50 p-6">
+          {/* EVENT DATE */}
+          {(event.eventStartDate ||
+            event.eventEndDate) && (
+            <div className="mt-8 rounded-xl bg-blue-50 p-5">
 
-            <p className="text-sm text-gray-500">
-              Registration Deadline
-            </p>
+              <p className="text-sm text-gray-500">
+                📅 Event Date
+              </p>
 
-            <p className="mt-1 text-xl font-bold text-orange-700">
-              {event.registrationDeadline}
-            </p>
+              <p className="mt-1 font-semibold text-blue-700">
 
-          </div>
+                {event.eventStartDate
+                  ? new Date(
+                      event.eventStartDate
+                    ).toLocaleDateString()
+                  : ""}
+
+                {event.eventEndDate
+                  ? ` - ${new Date(
+                      event.eventEndDate
+                    ).toLocaleDateString()}`
+                  : ""}
+
+              </p>
+
+            </div>
+          )}
+
+          {/* REGISTRATION DEADLINE */}
+          {event.registrationDeadline && (
+            <div className="mt-8 rounded-2xl bg-orange-50 p-6">
+
+              <p className="text-sm text-gray-500">
+                Registration Deadline
+              </p>
+
+              <p className="mt-1 text-xl font-bold text-orange-700">
+                {new Date(
+                  event.registrationDeadline
+                ).toLocaleDateString()}
+              </p>
+
+            </div>
+          )}
+
+          {/* MATCH REASONS */}
+          {event.matchReasons &&
+            event.matchReasons.length > 0 && (
+              <div className="mt-8">
+
+                <h3 className="text-xl font-bold text-gray-900">
+                  Why this matches you
+                </h3>
+
+                <div className="mt-4 space-y-3">
+
+                  {event.matchReasons.map(
+                    (reason, index) => (
+                      <div
+                        key={index}
+                        className="rounded-xl bg-green-50 p-4 text-gray-700"
+                      >
+                        ✓ {reason}
+                      </div>
+                    )
+                  )}
+
+                </div>
+              </div>
+            )}
+
+          {/* MISSING REQUIREMENTS */}
+          {event.missingRequirements &&
+            event.missingRequirements.length > 0 && (
+              <div className="mt-8">
+
+                <h3 className="text-xl font-bold text-gray-900">
+                  Requirements to improve eligibility
+                </h3>
+
+                <div className="mt-4 space-y-3">
+
+                  {event.missingRequirements.map(
+                    (item, index) => (
+                      <div
+                        key={index}
+                        className="rounded-xl bg-yellow-50 p-4 text-gray-700"
+                      >
+                        • {item}
+                      </div>
+                    )
+                  )}
+
+                </div>
+              </div>
+            )}
 
           {/* NEXT ACTION */}
-          <div className="mt-8">
+          {event.suggestedNextAction && (
+            <div className="mt-8">
 
-            <p className="text-sm text-gray-500">
-              Suggested Next Action
-            </p>
+              <p className="text-sm text-gray-500">
+                Suggested Next Action
+              </p>
 
-            <p className="mt-1 text-lg font-semibold text-purple-700">
-              {event.suggestedNextAction}
-            </p>
+              <p className="mt-1 text-lg font-semibold text-purple-700">
+                {event.suggestedNextAction}
+              </p>
 
-          </div>
+            </div>
+          )}
 
-          {/* ACTION BUTTONS */}
+          {/* BUTTONS */}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
 
-            <a
-              href={event.registrationLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 rounded-xl bg-purple-600 px-6 py-4 text-center font-semibold text-white transition hover:bg-purple-700"
-            >
-              Register / Official Link →
-            </a>
+            {registrationLink && (
+              <a
+                href={registrationLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 rounded-xl bg-purple-600 px-6 py-4 text-center font-semibold text-white transition hover:bg-purple-700"
+              >
+                Register / Official Link →
+              </a>
+            )}
 
             <button
               onClick={handleSave}
-              className={`flex-1 rounded-xl px-6 py-4 font-semibold transition ${
-                saved
-                  ? "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  : "border border-purple-200 bg-white text-purple-700 hover:bg-purple-50"
-              }`}
+              className="flex-1 rounded-xl border border-purple-200 bg-white px-6 py-4 font-semibold text-purple-700 hover:bg-purple-50"
             >
-              {saved ? "★ Remove from Saved" : "☆ Save Opportunity"}
+              {saved
+                ? "★ Remove from Saved"
+                : "☆ Save Opportunity"}
             </button>
 
           </div>
 
         </div>
-
-        {/* BACK TO RESULTS */}
-        <div className="mt-8 text-center">
-
-          <Link
-            href="/"
-            className="font-semibold text-purple-700 hover:underline"
-          >
-            ← Back to Recommended Opportunities
-          </Link>
-
-        </div>
-
-      </section>
-
+      </div>
     </main>
   );
 }

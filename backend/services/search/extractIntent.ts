@@ -263,4 +263,3 @@ export function extractIntent(query: string): SearchIntent {
 
   return intent;
 }
-```

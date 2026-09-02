@@ -16,46 +16,29 @@ export async function searchOpportunities(query: string) {
 
   let detectedEventType = "";
 
-  // Hackathon
   if (
-    searchText.includes("hackathon") ||
     searchText.includes("hackathon") ||
     searchText.includes("hack")
   ) {
     detectedEventType = "Hackathon";
-  }
-
-  // Workshop / Training
-  else if (
+  } else if (
     searchText.includes("workshop") ||
     searchText.includes("training")
   ) {
     detectedEventType = "Workshop";
-  }
-
-  // Symposium
-  else if (searchText.includes("symposium")) {
+  } else if (searchText.includes("symposium")) {
     detectedEventType = "Technical Symposium";
-  }
-
-  // Conference
-  else if (
+  } else if (
     searchText.includes("conference") ||
     searchText.includes("convention")
   ) {
     detectedEventType = "Conference";
-  }
-
-  // Competition
-  else if (
+  } else if (
     searchText.includes("competition") ||
     searchText.includes("contest")
   ) {
     detectedEventType = "Competition";
-  }
-
-  // Internship
-  else if (searchText.includes("internship")) {
+  } else if (searchText.includes("internship")) {
     detectedEventType = "Internship";
   }
 
@@ -82,7 +65,6 @@ export async function searchOpportunities(query: string) {
     }
   }
 
-  // Also support common city names even if database changes
   if (!detectedLocation) {
     const commonLocations = [
       "coimbatore",
@@ -145,7 +127,6 @@ export async function searchOpportunities(query: string) {
     "internet of things": "IoT",
   };
 
-  // Check longer phrases first
   const domainKeywordsSorted = Object.keys(domainKeywords).sort(
     (a, b) => b.length - a.length
   );
@@ -199,7 +180,7 @@ export async function searchOpportunities(query: string) {
 
   const queryWords = searchText
     .split(/\s+/)
-    .map((word) => word.replace(/[^\w.-]/g, ""))
+    .map((word) => word.replace(/[^\w\.-]/g, ""))
     .filter((word) => word.length > 2);
 
   // --------------------------------------------------
@@ -270,9 +251,7 @@ export async function searchOpportunities(query: string) {
       ).toLowerCase();
 
       const domainText = getDomainText(event);
-
       const skillsText = getSkillsText(event);
-
       const searchableText = getSearchableText(event);
 
       let score = 0;
@@ -388,36 +367,36 @@ export async function searchOpportunities(query: string) {
         }
       }
 
+      // ------------------------------------------------
+      // POSSIBILITY SCORE
+      // ------------------------------------------------
+      //
+      // Convert the internal relevance score into
+      // a clean 0-100 Possibility Score.
+      //
+      const matchPercentage = Math.min(
+        Math.round((score / 200) * 100),
+        100
+      );
+
       return {
         ...event,
-        _score: score,
+        matchPercentage,
       };
     })
     .filter(Boolean);
 
   // --------------------------------------------------
-  // 9. SORT BY RELEVANCE
+  // 9. SORT BY POSSIBILITY SCORE
   // --------------------------------------------------
 
   scoredEvents.sort(
     (a: any, b: any) =>
-      b._score - a._score
+      b.matchPercentage - a.matchPercentage
   );
 
   // --------------------------------------------------
-  // 10. REMOVE INTERNAL SCORE
-  // --------------------------------------------------
-
-  const filteredEvents = scoredEvents.map(
-    (event: any) => {
-      const { _score, ...cleanEvent } = event;
-
-      return cleanEvent;
-    }
-  );
-
-  // --------------------------------------------------
-  // 11. RETURN SEARCH RESULT
+  // 10. RETURN SEARCH RESULT
   // --------------------------------------------------
 
   return {
@@ -442,6 +421,6 @@ export async function searchOpportunities(query: string) {
         detectedStudentType,
     },
 
-    results: filteredEvents,
+    results: scoredEvents,
   };
 }
